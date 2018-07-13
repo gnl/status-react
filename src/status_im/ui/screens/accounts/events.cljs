@@ -1,5 +1,7 @@
 (ns status-im.ui.screens.accounts.events
   (:require [re-frame.core :as re-frame]
+            [status-im.thread :as status-im.thread]
+            [status-im.thread :as status-im.thread]
             [taoensso.timbre :as log]
             [status-im.native-module.core :as status]
             [status-im.utils.types :refer [json->clj]]
@@ -43,7 +45,7 @@
  (fn [password]
    (status/create-account
     password
-    #(re-frame/dispatch [::account-created (json->clj %) password]))))
+    #(status-im.thread/dispatch [::account-created (json->clj %) password]))))
 
 ;;;; Handlers
 
@@ -171,7 +173,7 @@
        (utils/show-popup
         (i18n/label :mainnet-is-default-alert-title)
         (i18n/label :mainnet-is-default-alert-text)
-        #(re-frame/dispatch [:update-mainnet-warning-shown]))))))
+        #(status-im.thread/dispatch [:update-mainnet-warning-shown]))))))
 
 (handlers/register-handler-fx
  :reset-account-creation

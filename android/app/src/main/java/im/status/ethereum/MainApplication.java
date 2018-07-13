@@ -26,6 +26,7 @@ import io.realm.react.RealmReactPackage;
 import me.alwx.HttpServer.HttpServerReactPackage;
 import com.testfairy.react.TestFairyPackage;
 import com.oblador.keychain.KeychainPackage;
+import com.reactlibrary.RNThreadPackage;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -56,6 +57,33 @@ public class MainApplication extends MultiDexApplication implements ReactApplica
             Function<String, String> callRPC = statusPackage.getCallRPC();
             List<ReactPackage> packages = new ArrayList<ReactPackage>(Arrays.asList(
                     new MainReactPackage(),
+                    new RNThreadPackage(mReactNativeHost,
+                            new RNI18nPackage(),
+                            new RNSecureRandomPackage(),
+
+                            new BackgroundTimerPackage(),
+                            new SvgPackage(),
+                            new FIRMessagingPackage(),
+                            new HttpServerReactPackage(),
+                            new NfcReactNativePackage(),
+                            new SplashScreenReactPackage(),
+                            statusPackage,
+                            new RealmReactPackage(),
+                            new RCTCameraPackage(),
+                            new RNFSPackage(),
+                            new ReactNativeDialogsPackage(),
+                            new ImageResizerPackage(),
+                            new PickerPackage(),
+                            new TestFairyPackage(),
+                            new WebViewBridgePackage(webViewDebugEnabled, callRPC),
+                            new ReactNativeConfigPackage(),
+                            new KeychainPackage(),
+                            new RNInstabugReactnativePackage.Builder(BuildConfig.INSTABUG_TOKEN,MainApplication.this)
+                                    .setInvocationEvent("shake")
+                                    .setPrimaryColor("#1D82DC")
+                                    .setFloatingEdge("left")
+                                    .setFloatingButtonOffsetFromTop(250)
+                                    .build()),
                     new RNSecureRandomPackage(),
                     new BackgroundTimerPackage(),
                     new SvgPackage(),

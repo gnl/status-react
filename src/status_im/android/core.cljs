@@ -1,11 +1,11 @@
 (ns status-im.android.core
   (:require [reagent.core :as reagent]
-            [re-frame.core :refer [subscribe dispatch dispatch-sync]]
+            [re-frame.core :refer [subscribe dispatch]]
             status-im.utils.db
             status-im.ui.screens.db
-            status-im.ui.screens.events
             status-im.ui.screens.subs
             status-im.data-store.core
+            [status-im.thread :as thread]
             [status-im.ui.screens.views :as views]
             [status-im.ui.components.react :as react]
             [status-im.native-module.core :as status]
@@ -71,6 +71,7 @@
       :reagent-render views/main})))
 
 (defn init []
+  (thread/start)
   (status/set-soft-input-mode status/adjust-resize)
   (init-back-button-handler!)
   (core/init app-root)

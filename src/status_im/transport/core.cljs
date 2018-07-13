@@ -1,6 +1,7 @@
 (ns ^{:doc "API to init and stop whisper messaging"}
  status-im.transport.core
   (:require [re-frame.core :as re-frame]
+            [status-im.thread :as status-im.thread]
             [status-im.constants :as constants]
             [status-im.data-store.transport :as transport-store]
             [status-im.transport.handlers :as transport.handlers]
@@ -20,7 +21,7 @@
   (log/debug :init-whisper)
   (when-let [public-key (get-in db [:account/account :public-key])]
     (let [sym-key-added-callback (fn [chat-id sym-key sym-key-id]
-                                   (re-frame/dispatch [::sym-key-added {:chat-id    chat-id
+                                   (status-im.thread/dispatch [::sym-key-added {:chat-id    chat-id
                                                                         :sym-key    sym-key
                                                                         :sym-key-id sym-key-id}]))
           topic (transport.utils/get-topic constants/contact-discovery)]
@@ -59,7 +60,7 @@
                            {:symKeyID sym-key-id
                             :topics   [topic]}
                            (fn [js-error js-message]
-                             (re-frame/dispatch [:protocol/receive-whisper-message js-error js-message chat-id])))))
+                             (status-im.thread/dispatch [:protocol/receive-whisper-message js-error js-message chat-id])))))
 
 (defn stop-whisper
   "Stops whisper protocol by removing all existing shh filters
